@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>SESI | Monitoramento de Chamados - Cervello</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+</head>
+
+<body class="sharepoint">
+
+<header>
+
+    <div class="logo">
+
+        <img src="logo.png" alt="SESI Positivo Tecnologia" class="logoEmpresa">
+
+        <h1>SESI | Monitoramento de Chamados - Cervello</h1>
+
+    </div>
+
+    <div class="top-right">
+
+        <div class="ultimaAtualizacao">
+
+            <i class="fa-regular fa-clock"></i>
+
+            <span id="ultimaAtualizacao">
+                Nenhuma planilha carregada
+            </span>
+
+        </div>
+
+        <div class="atualizar">
+
+            <button id="btnAtualizar" class="btn-atualizar" type="button">
+
+                <i class="fa-solid fa-arrows-rotate"></i>
+
+                Atualizar Dados
+
+            </button>
+
+        </div>
+
+    </div>
+
+</header>
+
+<main>
+
+<section class="cards">
+
+    <div class="card total">
+
+        <i class="fa-solid fa-folder-open"></i>
+
+        <h3>Total de Chamados</h3>
+
+        <h1 id="totalChamados">0</h1>
+
+    </div>
+
+    <div class="card aguardando">
+
+        <i class="fa-solid fa-hourglass-half"></i>
+
+        <h3>Aguardando</h3>
+
+        <h1 id="aguardando">0</h1>
+
+    </div>
+
+    <div class="card atendimento">
+
+        <i class="fa-solid fa-headset"></i>
+
+        <h3>Em Atendimento</h3>
+
+        <h1 id="atendimento">0</h1>
+
+    </div>
+
+    <div class="card finalizados">
+
+        <i class="fa-solid fa-circle-check"></i>
+
+        <h3>Finalizados</h3>
+
+        <h1 id="finalizados">0</h1>
+
+    </div>
+
+    <div class="card cancelados">
+
+        <i class="fa-solid fa-ban"></i>
+
+        <h3>Cancelados</h3>
+
+        <h1 id="cancelados">0</h1>
+
+    </div>
+
+    <div class="card seteDias">
+
+        <i class="fa-solid fa-calendar-week"></i>
+
+        <h3>Chamados (7 dias)</h3>
+
+        <h1 id="kpiChamados7Dias">0</h1>
+
+    </div>
+
+</section>
+
+<section class="filtros">
+
+    <div class="filtro-item">
+        <label>Mês</label>
+        <div class="multiselect" id="msMes">
+            <button type="button" class="ms-toggle">Todos <i class="fa-solid fa-chevron-down"></i></button>
+            <div class="ms-panel">
+                <div class="ms-actions">
+                    <button type="button" class="ms-all">Marcar todos</button>
+                    <button type="button" class="ms-none">Desmarcar todos</button>
+                </div>
+                <div class="ms-search"><input type="text" placeholder="Buscar..."></div>
+                <div class="ms-options"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="filtro-item">
+        <label>Setor</label>
+        <div class="multiselect" id="msSetor">
+            <button type="button" class="ms-toggle">Todos <i class="fa-solid fa-chevron-down"></i></button>
+            <div class="ms-panel">
+                <div class="ms-actions">
+                    <button type="button" class="ms-all">Marcar todos</button>
+                    <button type="button" class="ms-none">Desmarcar todos</button>
+                </div>
+                <div class="ms-search"><input type="text" placeholder="Buscar..."></div>
+                <div class="ms-options"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="filtro-item">
+        <label>Localidade</label>
+        <div class="multiselect" id="msLocalidade">
+            <button type="button" class="ms-toggle">Todos <i class="fa-solid fa-chevron-down"></i></button>
+            <div class="ms-panel">
+                <div class="ms-actions">
+                    <button type="button" class="ms-all">Marcar todos</button>
+                    <button type="button" class="ms-none">Desmarcar todos</button>
+                </div>
+                <div class="ms-search"><input type="text" placeholder="Buscar..."></div>
+                <div class="ms-options"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="filtro-item">
+        <label>Causa</label>
+        <div class="multiselect" id="msCausa">
+            <button type="button" class="ms-toggle">Todos <i class="fa-solid fa-chevron-down"></i></button>
+            <div class="ms-panel">
+                <div class="ms-actions">
+                    <button type="button" class="ms-all">Marcar todos</button>
+                    <button type="button" class="ms-none">Desmarcar todos</button>
+                </div>
+                <div class="ms-search"><input type="text" placeholder="Buscar..."></div>
+                <div class="ms-options"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="filtro-item">
+        <label>Status</label>
+        <div class="multiselect" id="msStatus">
+            <button type="button" class="ms-toggle">Todos <i class="fa-solid fa-chevron-down"></i></button>
+            <div class="ms-panel">
+                <div class="ms-actions">
+                    <button type="button" class="ms-all">Marcar todos</button>
+                    <button type="button" class="ms-none">Desmarcar todos</button>
+                </div>
+                <div class="ms-search"><input type="text" placeholder="Buscar..."></div>
+                <div class="ms-options"></div>
+            </div>
+        </div>
+    </div>
+
+    <button id="limparFiltros" class="btn-limpar" type="button">
+        <i class="fa-solid fa-filter-circle-xmark"></i>
+        Limpar Filtros
+    </button>
+
+</section>
+
+<section class="graficos">
+
+    <div class="grafico">
+
+        <h2>
+            <i class="fa-solid fa-calendar-week"></i>
+            Chamados (Últimos 7 Dias) por Causa
+        </h2>
+
+        <div class="chart-wrapper">
+            <canvas id="chamados7dias"></canvas>
+        </div>
+
+    </div>
+
+    <div class="grafico">
+
+        <h2>
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+            Chamados por Causa
+        </h2>
+
+        <div class="chart-wrapper">
+            <canvas id="causas"></canvas>
+        </div>
+
+    </div>
+
+    <div class="grafico">
+
+        <h2>
+            <i class="fa-solid fa-location-dot"></i>
+            Chamados por Localidade
+        </h2>
+
+        <div class="chart-wrapper">
+            <canvas id="localidades"></canvas>
+        </div>
+
+    </div>
+
+    <div class="grafico">
+
+        <h2>
+            <i class="fa-solid fa-chart-pie"></i>
+            Status dos Chamados
+        </h2>
+
+        <div class="chart-wrapper">
+            <canvas id="status"></canvas>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="tabela-dados">
+
+    <div class="tabela-header">
+
+        <h2>
+            <i class="fa-solid fa-table"></i>
+            Dados Filtrados (<span id="contadorLinhas">0</span>)
+        </h2>
+
+        <button id="baixarExcel" class="btn-baixar" type="button">
+            <i class="fa-solid fa-file-excel"></i>
+            Baixar Excel
+        </button>
+
+    </div>
+
+    <div class="tabela-wrapper">
+        <table id="tabelaDados">
+            <thead>
+                <tr id="tabelaHead"></tr>
+            </thead>
+            <tbody id="tabelaBody">
+                <tr><td class="tabela-vazia" colspan="100">Nenhuma planilha carregada</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+</section>
+
+</main>
+
+<script src="charts.js"></script>
+<script src="script.js"></script>
+
+</body>
+
+</html>
